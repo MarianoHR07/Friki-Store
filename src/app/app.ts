@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'brewery';
+  protected title = 'brewery';  
+  // el componente app esta definiendo una propiedad/ attributo 
+  // y toda propiedad de caracter publico que esta en el componente la podemos usar e incluir en el Html
 }
