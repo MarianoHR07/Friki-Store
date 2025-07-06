@@ -1,37 +1,29 @@
 <p>parrafo de lista de cervezas {{title}}</p>  
 <!-- table.table>thead>tr>th*4 -->
 <table class="table table-striped text-center align-middle">
-    <thead>
+    <thead class="table-dark">
         <tr>
             <th scope="col" aria-label="Beer-Image"></th>
-            <th>nombre</th>
-            <th>tipo</th>
-            <th>precio</th>
-            <th>stock</th>
-            <th scope="col" aria-label="Stock-Status"></th>
+            <th scope="col">nombre</th>
+            <th scope="col">tipo</th>
+            <th scope="col">precio</th>
+            <th scope="col" colspan="2">stock</th>
+            <!-- <th scope="col" aria-label="Stock-Status"></th> -->
         </tr>
     </thead>
     <!-- tbody>tr*3>td*4 -->
-     <tbody>
-                                             <!-- <td class="td-ajustada p-0 align-middle"> <img [src]="producto.img" style="width: 120px; height: auto" [alt]="producto.nombre"></td> -->
-        <!-- <tr class="bg-primary">
-            <td class="p-0 text-center align-middle"><img [src]="beer.image" [alt]="beer.name"></td>
-            <td class="p-0 text-center align-middle">{{beer.name}}</td>
-            <td class="p-0 text-center align-middle">{{beer.type}}</td>
-            <td class="p-0 text-center align-middle">{{beer.price}}</td>
-            <td class="bg-primary p-0 text-center align-middle">{{beer.stock}}</td>
-        </tr> -->
-
+    <tbody>
         <!-- Directivas: Forma que tiene angular para generar templates dinamicos (agrega comportamiento al template y esta asociado a lo visual, no a la logica que hay por detras) -->
         <!-- Usamos la directiva estructural -->
-
         <ng-container *ngIf="beers && beers.length>0; else empty">
-            <tr *ngFor="let beer of beers" [ngClass]="{'clearance':beer.clearance,'table-warning':beer.clearance}">
+
+  <!-- Antes del Refactor -->
+            <!-- <tr *ngFor="let beer of beers" [ngClass]="{'clearance':beer.clearance,'table-warning':beer.clearance}">
                 <td  ><img [src]="beer.image" [alt]="beer.name"></td>
                 <td>{{beer.name}}</td>
-                <td>{{beer.type}}</td>
+                <td>{{beer.type}}</td> -->
                 <!-- interpolamos la variable "pipe currency" , ya que beer.price pasa por la tuberia "currency" y el resultado del pipe es lo que se interpola -->
-                <td>{{beer.price|currency}}</td >  
+                <!-- <td>{{beer.price|currency}}</td >  
                     
                 <td>
                     <span *ngIf="beer.stock>=10">{{beer.stock}}</span>
@@ -54,40 +46,50 @@
                         </ng-container>
                     </ng-template>
                 </td>
+            </tr> -->
+  <!-- Antes del Refactor -->
+   
+<tr *ngFor="let beer of beers" [ngClass]="{'clearance':beer.clearance, 'table-warning':beer.clearance}">
+  <td><img [src]="beer.image" [alt]="beer.name"></td>
+  <td>{{ beer.name }}</td>
+  <td>{{ beer.type }}</td>
+  <td>{{ beer.price | currency }}</td>
 
+  <!-- Caso cuando beer.stock >= 10: se muestran 2 celdas -->
+  <ng-container *ngIf="beer.clearance && beer.stock >= 10; else mergedCell">
+    <td>{{ beer.stock }}</td>
+    <td>
+      <ng-container *ngIf="beer.clearance">
+        <span class="badge text-bg-warning">¡Oferta!</span>
+      </ng-container>
+    </td>
+  </ng-container>
 
+  <!-- Caso cuando stock < 10: un solo td con colspan -->
+  <ng-template #mergedCell>
+    <td colspan="2">
+      <ng-container *ngIf="beer.stock === 0; else lowStock">
+        <span class="badge text-bg-warning">Sin Stock</span>
+      </ng-container>
 
-                
-    <!-- ANTES DE REFACTORIZAR -->
-                <!-- <ng-container *ngIf="beer.stock===0; else stockk">
-                    <td> -->
-                        <!-- <td *ngIf="beer.stock===0">Sin Stock</td>  si lo hiciera sin un 
-                         span, si a la derecha hubiera otra columna, habria filas con una columna 
-                         menos, cuando tienen stock , comenzarian a desfazarse-->
-                        <!-- <span class="badge text-bg-warning">Sin Stock</span>
-                    </td>
-                </ng-container>
-                <ng-template #stockk>
-                    <td *ngIf="beer.stock>=10; else restockProducts ">
-                          Tengo Stock y veo si esta en oferta o no  
-                        <span class="badge text-bg-warning" *ngIf="beer.clearance">Oferta!!</span>
-                    </td>   
-                    <ng-template #restockProducts>
-                        <td *ngIf="beer.clearance; else commonProducts">
-                              Tiene promo y quedan menos de 10  
-                            <span class="badge text-bg-warning">Ultimos en Oferta!!</span>
-                        </td> 
-                    </ng-template> 
-                    <ng-template #commonProducts>
-                        <td>
-                              No tiene promo y quedan menos de 10 "atraigo al cliente, , ya que este producto no tiene promo" 
-                            <span class="badge text-bg-warning">No te lo pierdas, es el ultimo!!</span>
-                        </td> 
-                    </ng-template> 
-                </ng-template>  -->
-    <!-- ANTES DE REFACTORIZAR -->
-     
-            </tr>
+      <ng-template #lowStock>
+        <ng-container *ngIf="beer.clearance; else noClearance">
+          <span class="badge text-bg-warning">¡Últimos en Oferta!!</span>
+        </ng-container>
+        <ng-template #noClearance>
+          <ng-container *ngIf="beer.stock < 10; else commonProduct">
+              <span class="badge text-bg-warning">¡No te lo pierdas, es el último!</span>
+          </ng-container>
+          <!-- 10 unidades (o mas) del producto y no tiene oferta -->
+          <ng-template #commonProduct>
+            {{ beer.stock }}
+          </ng-template>
+        </ng-template>
+      </ng-template>
+    </td>
+  </ng-template>
+</tr>
+
         </ng-container>
         <ng-template #empty>
             <tr colspan="4">No hay cervezas disponibles</tr>

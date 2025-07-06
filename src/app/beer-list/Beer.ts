@@ -4,5 +4,5 @@ export interface Beer{ // export me permite que la interface sea publica y puede
     price: number;
     stock: number;
     image: string;
-    clearance: boolean;   //beer.clearance_sale promocion de servezas
+    clearance: boolean;   //beer.clearance_sale promocion de cervezas
   }
