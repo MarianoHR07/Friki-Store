@@ -1,107 +1,90 @@
 <p>parrafo de lista de cervezas {{title}}</p>  
 <!-- table.table>thead>tr>th*4 -->
-<table class="table table-striped text-center align-middle">
-    <thead class="table-dark">
-        <tr>
-            <th scope="col" aria-label="Beer-Image"></th>
-            <th scope="col">nombre</th>
-            <th scope="col">tipo</th>
-            <th scope="col">precio</th>
-            <th scope="col" colspan="2">stock</th>
-            <!-- <th scope="col" aria-label="Stock-Status"></th> -->
-        </tr>
-    </thead>
-    <!-- tbody>tr*3>td*4 -->
-    <tbody>
-        <!-- Directivas: Forma que tiene angular para generar templates dinamicos (agrega comportamiento al template y esta asociado a lo visual, no a la logica que hay por detras) -->
-        <!-- Usamos la directiva estructural -->
-        <ng-container *ngIf="beers && beers.length>0; else empty">
+<table class="table table-striped text-center align-middle table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col" aria-label="Beer-Image"></th>
+      <th scope="col">nombre</th>
+      <th scope="col">tipo</th>
+      <th scope="col">precio</th>
+      <th scope="col">stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="beers && beers.length > 0; else empty">
 
-  <!-- Antes del Refactor -->
-            <!-- <tr *ngFor="let beer of beers" [ngClass]="{'clearance':beer.clearance,'table-warning':beer.clearance}">
-                <td  ><img [src]="beer.image" [alt]="beer.name"></td>
-                <td>{{beer.name}}</td>
-                <td>{{beer.type}}</td> -->
-                <!-- interpolamos la variable "pipe currency" , ya que beer.price pasa por la tuberia "currency" y el resultado del pipe es lo que se interpola -->
-                <!-- <td>{{beer.price|currency}}</td >  
-                    
-                <td>
-                    <span *ngIf="beer.stock>=10">{{beer.stock}}</span>
-                </td>
+      <tr *ngFor="let beer of beers" 
+        [ngClass]="{
+          'clearance': beer.clearance,
+          'table-warning': beer.clearance,       
+      }">     <!-- table-warning:  le da el color a la fila de la tabla -->
+      
+        <td><img [src]="beer.image" [alt]="beer.name" class="img-fluid" style="max-height: 60px;"></td>
+        <td>{{ beer.name }}</td>
+        <td>{{ beer.type }}</td>
+        <td>{{ beer.price | currency }}</td>
 
-                <td>
-                    <ng-container *ngIf="beer.stock === 0; else stockOk">
-                        <span class="badge text-bg-warning">Sin Stock</span>
-                    </ng-container>
-
-                    <ng-template #stockOk>
-                        <ng-container *ngIf="beer.stock >= 10">
-                           <span *ngIf="beer.clearance" class="badge text-bg-warning">¡Oferta!!</span>
-                        </ng-container>
-                        <ng-container *ngIf="beer.stock < 10">
-                            <span *ngIf="beer.clearance; else noClearance" class="badge text-bg-warning">¡Últimos en Oferta!!</span>
-                            <ng-template #noClearance>
-                                <span class="badge text-bg-warning">¡No te lo pierdas, es el último!</span>
-                            </ng-template>
-                        </ng-container>
-                    </ng-template>
-                </td>
-            </tr> -->
-  <!-- Antes del Refactor -->
-   
-<tr *ngFor="let beer of beers" [ngClass]="{'clearance':beer.clearance, 'table-warning':beer.clearance}">
-  <td><img [src]="beer.image" [alt]="beer.name"></td>
-  <td>{{ beer.name }}</td>
-  <td>{{ beer.type }}</td>
-  <td>{{ beer.price | currency }}</td>
-
-  <!-- Caso cuando beer.stock >= 10: se muestran 2 celdas -->
-  <ng-container *ngIf="beer.clearance && beer.stock >= 10; else mergedCell">
-    <td>{{ beer.stock }}</td>
-    <td>
-      <ng-container *ngIf="beer.clearance">
-        <span class="badge text-bg-warning">¡Oferta!</span>
-      </ng-container>
-    </td>
-  </ng-container>
-
-  <!-- Caso cuando stock < 10: un solo td con colspan -->
-  <ng-template #mergedCell>
-    <td colspan="2">
-      <ng-container *ngIf="beer.stock === 0; else lowStock">
-        <span class="badge text-bg-warning">Sin Stock</span>
-      </ng-container>
-
-      <ng-template #lowStock>
-        <ng-container *ngIf="beer.clearance; else noClearance">
-          <span class="badge text-bg-warning">¡Últimos en Oferta!!</span>
+        <!-- Sin stock -->
+        <ng-container *ngIf="beer.stock === 0">
+          <td class="text-center">
+            <span class="badge bg-danger">
+              <i class="bi bi-exclamation-triangle-fill"></i> Sin Stock
+            </span>
+          </td>
         </ng-container>
-        <ng-template #noClearance>
-          <ng-container *ngIf="beer.stock < 10; else commonProduct">
-              <span class="badge text-bg-warning">¡No te lo pierdas, es el último!</span>
-          </ng-container>
-          <!-- 10 unidades (o mas) del producto y no tiene oferta -->
-          <ng-template #commonProduct>
+
+        <!-- Stock > 10 -->
+        <ng-container *ngIf="beer.stock > 10">
+          <td>
             {{ beer.stock }}
-          </ng-template>
-        </ng-template>
-      </ng-template>
-    </td>
-  </ng-template>
-</tr>
-
+            <ng-container *ngIf="beer.clearance">
+              <div class="lh-lg">
+                <span class="badge bg-warning text-dark">
+                <i class="bi bi-lightning-fill"></i> ¡Oferta!
+              </span>
+              </div>
+            </ng-container>
+          </td>
         </ng-container>
-        <ng-template #empty>
-            <tr colspan="4">No hay cervezas disponibles</tr>
-        </ng-template>
-        
 
-        <!-- Sin directivas: (nuevo 2025) -->
-        <!-- <tr *ngFor="let beer of beers">
-            <td><img class="img-thumbnail" [src]="beer.image" [alt]="beer.name"></td>
-            <td>{{beer.name}}</td>
-            <td>{{beer.type}}</td>
-            <td>{{beer.price}}</td>
-        </tr> -->
-     </tbody>
+        <!-- Stock entre 1 y 10 con oferta -->
+        <ng-container *ngIf="beer.stock > 0 && beer.stock <= 10">
+          <td class="text-center">
+            <ng-container *ngIf="beer.clearance; else lowStock">
+              <span [ngClass]="{
+                'badge': true,
+                'bg-warning text-dark': beer.stock > 3,
+                'bg-danger': beer.stock <= 3,
+                'blink-soft': beer.stock === 1,
+              }">
+              <i class="bi bi-fire"></i>
+              <ng-container *ngIf="beer.stock === 1">¡Última en Oferta!</ng-container>
+              <ng-container *ngIf="beer.stock > 1">¡Últimos en Oferta!</ng-container>
+              </span>
+            </ng-container>
+            <!-- Stock entre 1 y 10 sin oferta -->
+            <ng-template #lowStock>
+              <span [ngClass]="{
+                'badge': true,
+                'bg-warning text-dark': beer.stock > 3,
+                'bg-danger': beer.stock <= 3,
+               
+                'blink': beer.stock === 1
+              }"> 
+              <!-- 'blink': beer.stock === 1, -->
+                <i class="bi bi-box-seam"></i>
+                <ng-container *ngIf="beer.stock === 1">¡Última unidad!</ng-container>
+                <ng-container *ngIf="beer.stock > 1">¡No te lo pierdas!</ng-container>
+              </span>
+            </ng-template>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+    <ng-template #empty>
+      <tr>
+        <td colspan="6">No hay cervezas disponibles</td>
+      </tr>
+    </ng-template>
+  </tbody>
 </table>

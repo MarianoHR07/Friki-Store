@@ -38,7 +38,7 @@ export class BeerList {
       name:"Yellow Submarine",
       type:"Golden Ale",
       price:4759.98,
-      stock:8,
+      stock:1,
       image:"assets/img/old-ale.png" ,
       clearance:true,
     },
@@ -62,7 +62,7 @@ export class BeerList {
       name: "Brama",
       type: "APA",
       price:4500,
-      stock:0,
+      stock:1,
       image:  "assets/img/brahama-dorada.webp",
       clearance:false,
     }
