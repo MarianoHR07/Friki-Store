@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { BeerList } from './beer-list/beer-list';
 
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     App,
@@ -12,7 +13,8 @@ import { BeerList } from './beer-list/beer-list';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

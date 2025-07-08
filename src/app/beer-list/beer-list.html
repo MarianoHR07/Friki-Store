@@ -8,6 +8,7 @@
       <th scope="col">tipo</th>
       <th scope="col">precio</th>
       <th scope="col">stock</th>
+      <th>Compra</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +20,8 @@
           'table-warning': beer.clearance,       
       }">     <!-- table-warning:  le da el color a la fila de la tabla -->
       
-        <td><img [src]="beer.image" [alt]="beer.name" class="img-fluid" style="max-height: 60px;"></td>
+        <!-- <td><img [src]="beer.image" [alt]="beer.name" class="img-fluid img-beer" style="max-height: 100px;"></td> -->
+          <td><img [src]="beer.image" [alt]="beer.name" class="img-beer"></td>
         <td>{{ beer.name }}</td>
         <td>{{ beer.type }}</td>
         <td>{{ beer.price | currency }}</td>
@@ -79,6 +81,29 @@
             </ng-template>
           </td>
         </ng-container>
+        <td>
+          <button type="button" class="btn btn-dark btn-sm" style="width: 30px"
+            (click)="downQuantity(beer)">
+            -
+          </button>
+
+          <input type="number" 
+                 name="unidades-cervezas" 
+                 id= {{beer.name}} 
+                 style="width: 80px;"
+                 [min]="0"
+                 [max]="beer.stock"
+                 [value]="beer.buyQuantity" 
+                 [(ngModel)]="beer.buyQuantity"
+
+                 (keyup)="validateKey($event, onlyNumbers)"
+                 (input)="validateQuantity($event, beer)"> 
+      
+            <button type="button" class="btn btn-dark btn-sm" style="width: 30px"
+            (click)="upQuantity(beer)">
+            +
+          </button>
+        </td>
       </tr>
     </ng-container>
     <ng-template #empty>
