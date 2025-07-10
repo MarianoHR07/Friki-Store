@@ -11,21 +11,21 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="beers && beers.length > 0; else empty">
+    <ng-container *ngIf="products && products.length > 0; else empty">
 
-      <tr scope="row" *ngFor="let beer of beers" 
+      <tr scope="row" *ngFor="let product of products" 
         [ngClass]="{
-          'clearance': beer.clearance,
-          'table-warning': beer.clearance,       
+          'clearance': product.clearance,
+          'table-warning': product.clearance,       
         }">     <!-- table-warning:  le da el color a la fila de la tabla -->
-        <!-- <td><img [src]="beer.image" [alt]="beer.name" class="img-fluid img-beer" style="max-height: 100px;"></td> -->
-        <td><img [src]="beer.image" [alt]="beer.name" class="img-beer"></td>
-        <td>{{ beer.name }}</td>
-        <td>{{ beer.type }}</td>
-        <td>{{ beer.price | currency }}</td>
+        <!-- <td><img [src]="product.image" [alt]="product.name" class="img-fluid img-product" style="max-height: 100px;"></td> -->
+        <td><img [src]="product.image" [alt]="product.name" class="img-product"></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.type }}</td>
+        <td>{{ product.price | currency }}</td>
 
         <!-- Sin stock -->
-        <ng-container *ngIf="beer.stock === 0">
+        <ng-container *ngIf="product.stock === 0">
           <td class="text-center">
             <span class="badge bg-danger">
               <i class="bi bi-exclamation-triangle-fill"></i> Sin Stock
@@ -34,10 +34,10 @@
         </ng-container>
 
         <!-- Stock > 10 -->
-        <ng-container *ngIf="beer.stock > 10">
+        <ng-container *ngIf="product.stock > 10">
           <td>
-            {{ beer.stock }}
-            <ng-container *ngIf="beer.clearance">
+            {{ product.stock }}
+            <ng-container *ngIf="product.clearance">
               <div class="lh-lg">
                 <span class="badge bg-warning text-dark">
                 <i class="bi bi-lightning-fill"></i> ¡Oferta!
@@ -48,33 +48,33 @@
         </ng-container>
 
         <!-- Stock entre 1 y 10 con oferta -->
-        <ng-container *ngIf="beer.stock > 0 && beer.stock <= 10">
+        <ng-container *ngIf="product.stock > 0 && product.stock <= 10">
           <td class="text-center">
-            <ng-container *ngIf="beer.clearance; else lowStock">
+            <ng-container *ngIf="product.clearance; else lowStock">
               <span [ngClass]="{
                 'badge': true,
-                'bg-warning text-dark': beer.stock > 3,
-                'bg-danger': beer.stock <= 3,
-                'blink-soft': beer.stock === 1,
+                'bg-warning text-dark': product.stock > 3,
+                'bg-danger': product.stock <= 3,
+                'blink-soft': product.stock === 1,
               }">
               <i class="bi bi-fire"></i>
-              <ng-container *ngIf="beer.stock === 1">¡Última en Oferta!</ng-container>
-              <ng-container *ngIf="beer.stock > 1">¡Últimos en Oferta!</ng-container>
+              <ng-container *ngIf="product.stock === 1">¡Última en Oferta!</ng-container>
+              <ng-container *ngIf="product.stock > 1">¡Últimos en Oferta!</ng-container>
               </span>
             </ng-container>
             <!-- Stock entre 1 y 10 sin oferta -->
             <ng-template #lowStock>
               <span [ngClass]="{
                 'badge': true,
-                'bg-warning text-dark': beer.stock > 3,
-                'bg-danger': beer.stock <= 3,
+                'bg-warning text-dark': product.stock > 3,
+                'bg-danger': product.stock <= 3,
                
-                'blink': beer.stock === 1
+                'blink': product.stock === 1
               }"> 
-              <!-- 'blink': beer.stock === 1, -->
+              <!-- 'blink': product.stock === 1, -->
                 <i class="bi bi-box-seam"></i>
-                <ng-container *ngIf="beer.stock === 1">¡Última unidad!</ng-container>
-                <ng-container *ngIf="beer.stock > 1">¡No te lo pierdas!</ng-container>
+                <ng-container *ngIf="product.stock === 1">¡Última unidad!</ng-container>
+                <ng-container *ngIf="product.stock > 1">¡No te lo pierdas!</ng-container>
               </span>
             </ng-template>
           </td>
@@ -84,24 +84,24 @@
             <div class="input-group">
               <div class="input-group-prepend">
                 <button type="button" class="btn btn-dark btn-sm"  
-                (click)="downQuantity(beer)">
+                (click)="downQuantity(product)">
                 -
                 </button>
               </div>
               <input type="number" 
                    name="unidades-cervezas" 
-                   id= {{beer.name}} 
+                   id= {{product.name}} 
                    [min]="0"
-                   [max]="beer.stock"
-                   [value]="beer.buyQuantity" 
+                   [max]="product.stock"
+                   [value]="product.buyQuantity" 
 
-                   [(ngModel)]="beer.buyQuantity"
+                   [(ngModel)]="product.buyQuantity"
                    (keyup)="validateKey($event, onlyNumbers)"
-                   (input)="validateQuantity($event, beer)"> 
+                   (input)="validateQuantity($event, product)"> 
                    
               <div class="input-group-append">
                 <button type="button" class="btn btn-dark btn-sm"
-                (click)="upQuantity(beer)">
+                (click)="upQuantity(product)">
                 +
                 </button>
               </div>

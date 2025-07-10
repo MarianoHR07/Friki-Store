@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "brewery": {
+    "friki-store": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -69,10 +69,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "brewery:build:production"
+              "buildTarget": "friki-store:build:production"
             },
             "development": {
-              "buildTarget": "brewery:build:development"
+              "buildTarget": "friki-store:build:development"
             }
           },
           "defaultConfiguration": "development"
