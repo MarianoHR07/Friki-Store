@@ -6,10 +6,16 @@ import { App } from './app';
 import { ProductList } from './product-list/product-list';
 
 import { FormsModule } from '@angular/forms';
+import { StoreAbout } from './store-about/store-about';
+import { ShoppingCart } from './shopping-cart/shopping-cart';
+import { FrikiStoreMerchandise } from './friki-store-merchandise/friki-store-merchandise';
 @NgModule({
   declarations: [
     App,
-    ProductList
+    ProductList,
+    StoreAbout,
+    ShoppingCart,
+    FrikiStoreMerchandise
   ],
   imports: [
     BrowserModule,

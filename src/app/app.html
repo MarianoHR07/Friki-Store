@@ -19,13 +19,14 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" [routerLink]="['/merchandise']">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Novedades</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"></a>
+          <!-- routerLink(ARREGLO ya que normalmente es un arbol de ruteo): Si usamos href, funciona pero no en el modo de SPA(no hay partial render), no activa el ruteo de angular (refresca la pagina, recarga por cada vez que ingreso a una nueva ruta) -->
+          <a class="nav-link" [routerLink]="['/about']">Contacto</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -44,12 +45,14 @@
 
 <main>
   <!-- div.containter>div.row>div.col-8*2  sort-cuts-->
-   <div class="containter">
-    <div class="row">
-      <div class="col-8"> 
-        <app-product-list></app-product-list> 
-      </div>
-      <div class="col-4">Carrito de Compras</div>
-    </div>
-   </div>
+  <div class="container-fluid">
+    <!-- <app-friki-store-merchandise></app-friki-store-merchandise>  -->
+    <router-outlet></router-outlet>
+    <!-- Rutea los componentes dependiendo del endpoint especificado, los componentes que estoy ruteando los mete aca adentro -->
+
+  </div>
 </main>
+
+<footer class="text-center bg-dark">
+  <span class="text-light">{{title}} 2025 ©</span>
+</footer>
