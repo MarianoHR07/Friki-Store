@@ -9,13 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { StoreAbout } from './store-about/store-about';
 import { ShoppingCart } from './shopping-cart/shopping-cart';
 import { FrikiStoreMerchandise } from './friki-store-merchandise/friki-store-merchandise';
+import { InputCounter } from './input-counter/input-counter';
 @NgModule({
   declarations: [
     App,
     ProductList,
     StoreAbout,
     ShoppingCart,
-    FrikiStoreMerchandise
+    FrikiStoreMerchandise,
+    InputCounter
   ],
   imports: [
     BrowserModule,

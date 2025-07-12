@@ -81,34 +81,14 @@
           </td>
         </ng-container>
         <td>
-          <div class="input-group mb-3">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <button type="button" class="btn btn-dark btn-sm"  
-                (click)="downQuantity(product)">
-                -
-                </button>
-              </div>
-              <input type="number" 
-                   name="unidades-cervezas" 
-                   id= {{product.name}} 
-                   [min]="0"
-                   [max]="product.stock"
-                   [value]="product.buyQuantity" 
+          <!-- [product]="product" permite que el product este al alcance para el hijo [hijo]="padre" ( hijo: app-input-counter) -->
+          <app-input-counter  *ngIf="product.stock"
+            [(quantity)]="product.buyQuantity" 
+            [max]="product.stock"
+            (maxReached)="maxReached($event, `${product.name}-${product.type}`)">
 
-                   [(ngModel)]="product.buyQuantity"
-                   (keyup)="validateKey($event, onlyNumbers)"
-                   (input)="validateQuantity($event, product)"> 
-                   
-              <div class="input-group-append">
-                <button type="button" class="btn btn-dark btn-sm"
-                (click)="upQuantity(product)">
-                +
-                </button>
-              </div>
-
-            </div>
-          </div>    
+          </app-input-counter>   
+          CantidadComprar: {{product.buyQuantity}}
         </td>
       </tr>
     </ng-container>

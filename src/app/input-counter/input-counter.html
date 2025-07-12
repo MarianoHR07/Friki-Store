@@ -1,0 +1,27 @@
+<div class="input-group mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button type="button" class="btn btn-dark btn-sm"  
+                (click)="downQuantity()">
+                -
+                </button>
+              </div>
+              <input type="number" 
+                   name="unidades-cervezas" 
+                   [min]="0"
+                   [max]="this.max"
+                   [value]="quantity" 
+
+                   [(ngModel)]="quantity"
+                   (keyup)="validateKey($event, onlyNumbers)"
+                   (input)="validateQuantity($event)"> 
+              
+              <div class="input-group-append">
+                <button type="button" class="btn btn-dark btn-sm"
+                (click)="upQuantity()">
+                +
+                </button>
+              </div>
+
+            </div>
+          </div> 
