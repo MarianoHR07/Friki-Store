@@ -87,7 +87,9 @@
             [max]="product.stock"
             (maxReached)="maxReached($event, `${product.name}-${product.type}`)">
 
-          </app-input-counter>   
+          </app-input-counter>  
+          <button type="button" class="btn btn-dark btn-sm"
+            (click)="addToCart(product)">Comprar</button> 
           CantidadComprar: {{product.buyQuantity}}
         </td>
       </tr>

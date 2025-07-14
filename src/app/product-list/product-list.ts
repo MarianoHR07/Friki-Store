@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from './Product';
+import { ProductCartService } from '../product-cart.service';
 @Component({
   selector: 'app-product-list',
   standalone: false,
@@ -73,18 +74,42 @@ export class ProductList {
     }
   ]
   
-  product={
-    "name":"Schneider",
-    "type":"Porter",
-    "price":3459.99,
-    "stock":37,
-    "image":"assets/img/schneider-porter.webp",
-    clearance:true,
-    buyQuantity:0,
-  }
+  // product={
+  //   "name":"Schneider",
+  //   "type":"Porter",
+  //   "price":3459.99,
+  //   "stock":37,
+  //   "image":"assets/img/schneider-porter.webp",
+  //   clearance:true,
+  //   buyQuantity:0,
+  // }
 
   title="Lista de Cervezas"
 
+
+  // para comunicar los componentes: shopping-cart y product-list
+  // injectamos el mismo servicio (la misma instancia del objeto) para shopping-cart y product-list
+  constructor(private cart: ProductCartService){
+
+  }
+
+  ngOnInit():void{
+
+  }
+  
+  addToCart(product:Product):void{
+    this.cart.addToCart(product)
+    product.stock -= product.buyQuantity;
+    product.buyQuantity=0;
+  }
+  // ante un evento del servicio debe refrescar el stock, de modo que a partir del buyQuantity del servicio , se lo reste
+  refreshStock(){   /// usar para cuando cambia de pagina
+    // for (let product:Product in this.products){
+    //   product.buyQuantity=carrito.buyQuantity;
+    // }
+  
+  }
+  
   maxReached($event:any,name:string){
     alert(`Se alcanzo el limite de unidades de ${name}`);
   }

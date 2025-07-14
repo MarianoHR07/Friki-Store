@@ -9,13 +9,13 @@
               <input type="number" 
                    name="unidades-cervezas" 
                    [min]="0"
-                   [max]="this.max"
+                   [max]="max"
                    [value]="quantity" 
 
                    [(ngModel)]="quantity"
                    (keyup)="validateKey($event, onlyNumbers)"
                    (input)="validateQuantity($event)"> 
-              
+             
               <div class="input-group-append">
                 <button type="button" class="btn btn-dark btn-sm"
                 (click)="upQuantity()">
