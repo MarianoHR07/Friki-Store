@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Product } from './Product';
 import { ProductCartService } from '../product-cart.service';
+import { ProductDataService } from '../product-data.service';
+
 @Component({
   selector: 'app-product-list',
   standalone: false,
@@ -9,104 +11,36 @@ import { ProductCartService } from '../product-cart.service';
 })
 export class ProductList {
 
-  // products:Product = {
-  //   name:"Schneider",
-  //   type:"Porter",
-  //   price:3459.99,
-  //   stock:37,
-  //   image:"assets/img/Schneider-porter.jpg"
-  // }
-  products:Product[] = [   /// esto es un mock, nos sirve para debuguear, maquetar.
-  // //Es decir, nos sirve para simular el comportamiento de la aplicacion sin pegarle a una appi o servidor
-    {
-      name:"Bitter Call Saul",
-      type:"Ipa",
-      price:4459.99,
-      stock:0,
-      image:"assets/img/session-ipa.jpg",
-      clearance:false,
-      buyQuantity:0,
-    },
-    {
-      name:"Red Red Wine",
-      type:"Barley Wine",
-      price:5209.99,
-      stock:7,
-      image:"assets/img/goyeneche-red-honey.webp",
-      clearance:false,
-      buyQuantity:0,
-    },
-    {
-      name:"Yellow Submarine",
-      type:"Golden Ale",
-      price:4759.98,
-      stock:1,
-      image:"assets/img/old-ale.png" ,
-      clearance:true,
-      buyQuantity:0,
-    },
-    {
-      name:"Schneider",
-      type:"Porter",
-      price:3459.99,
-      stock:37,
-      image:"assets/img/schneider-porter.webp",
-      clearance:false,
-      buyQuantity:0,
-    },
-    {
-      name: "Quilmes",
-      type: "IPA",
-      price: 222,
-      stock:37,
-      image: "assets/img/quilmes-ipa.jpg",
-      clearance:true,
-      buyQuantity:0,
-    },
-    {
-      name: "Brama",
-      type: "APA",
-      price:4500,
-      stock:1,
-      image:  "assets/img/brahama-dorada.webp",
-      clearance:false,
-      buyQuantity:0,
-    }
-  ]
-  
-  // product={
-  //   "name":"Schneider",
-  //   "type":"Porter",
-  //   "price":3459.99,
-  //   "stock":37,
-  //   "image":"assets/img/schneider-porter.webp",
-  //   clearance:true,
-  //   buyQuantity:0,
-  // }
-
   title="Lista de Cervezas"
 
-
+  products:Product[]=[]
   // para comunicar los componentes: shopping-cart y product-list
-  // injectamos el mismo servicio (la misma instancia del objeto) para shopping-cart y product-list
-  constructor(private cart: ProductCartService){
+  // injectamos el mismo servicio (la misma instancia del objeto)  
+  constructor(
+    private cart: ProductCartService,
+    private productDataService: ProductDataService
+  ){  }
 
-  }
-
-  ngOnInit():void{
-
+  ngOnInit():void{ // ciclo de vida, pequeñas funciones conocidas como hooks, (que se disparan cuando el componente aparece pantalla) 
+    // si no uso solamente la info para el template, necesito hacerlo por medio de suscribe
+    
+    // una opcion para suscribirnos a un obserbable, es suscribirnos a un servicio
+    this.productDataService.getAll()
+    .subscribe( (products) => (this.products = products))   //me suscribo (con una funcion anonima), para obtener el valor que esta emitiendo el observable 
+    // el arreglo de productos, se convierte en el q viene desde el servicio 
   }
   
+  ngOnDestroy(){
+    // Si me subscribo, cuando lo dejo de usar, necesito desuscribirme (ng destroy)
+  }
+
   addToCart(product:Product):void{
     this.cart.addToCart(product)
     product.stock -= product.buyQuantity;
     product.buyQuantity=0;
   }
-  // ante un evento del servicio debe refrescar el stock, de modo que a partir del buyQuantity del servicio , se lo reste
+
   refreshStock(){   /// usar para cuando cambia de pagina
-    // for (let product:Product in this.products){
-    //   product.buyQuantity=carrito.buyQuantity;
-    // }
   
   }
   

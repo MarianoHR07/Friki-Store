@@ -4,6 +4,6 @@ export interface Product{ // export me permite que la interface sea publica y pu
     price: number;
     stock: number;
     image: string;
-    clearance: boolean;   //product.clearance_sale promocion de cervezas
+    clearance: boolean;   //productos en oferta
     buyQuantity :number;
   }

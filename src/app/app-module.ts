@@ -10,6 +10,9 @@ import { StoreAbout } from './store-about/store-about';
 import { ShoppingCart } from './shopping-cart/shopping-cart';
 import { FrikiStoreMerchandise } from './friki-store-merchandise/friki-store-merchandise';
 import { InputCounter } from './input-counter/input-counter';
+
+import { HttpClientModule} from '@angular/common/http';
+
 @NgModule({
   declarations: [
     App,
@@ -23,6 +26,7 @@ import { InputCounter } from './input-counter/input-counter';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule 
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
