@@ -9,12 +9,12 @@
       <th scope="col">precio</th>
       <th scope="col">stock</th>
       <th scope="col">Compra</th>
-    </tr>
+    </tr>   
   </thead>
   <tbody>
-    <ng-container *ngIf="products && products.length > 0; else empty">
 
-      <tr scope="row" *ngFor="let product of products" 
+    @for(product of (dataList$ | async); track product.id){
+      <tr scope="row" 
         [ngClass]="{
           'clearance': product.clearance,
           'table-warning': product.clearance,       
@@ -92,12 +92,11 @@
             (click)="addToCart(product)">Comprar</button> 
           CantidadComprar: {{product.buyQuantity}}
         </td>
-      </tr>
-    </ng-container>
-    <ng-template #empty>
-      <tr scope="row">
-        <td colspan="6">No hay cervezas disponibles</td>
-      </tr>
-    </ng-template>
+      </tr> 
+    } @empty {
+        <tr scope="row">
+          <td colspan="6">Cargando productos...</td>
+        </tr>
+      }
   </tbody>
 </table>

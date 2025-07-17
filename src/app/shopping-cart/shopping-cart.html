@@ -3,4 +3,9 @@
     @for (product of (cartList$ | async); track product.name){
         <li>{{product.name}}-{{product.buyQuantity}}</li>
     }
+    <button type="button" class="btn btn-dark btn-sm"
+        (click)="makePurchase()" 
+        [disabled]="(cartList$ | async)?.length === 0">
+    Confirmar Compra 🛒
+    </button>
 </ul>
