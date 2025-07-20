@@ -1,0 +1,106 @@
+<form [formGroup]="signUpForm" (submit)="onSubmit()">
+  <!-- Usuario -->
+  <div class="control" [class.invalid]="classInvalid('username')" [class.valid]="classValid('username')">
+    <label for="username">👤 Usuario</label>
+    <input
+      id="username"
+      type="text"
+      formControlName="username"
+      [placeholder]="this.placeholder.username"
+      title="Ingresá tu apodo o alias"
+    />
+    <div class="error-message" *ngIf="isInvalid('username') && isDirty('username')">
+      <p>El nombre de usuario es requerido</p>
+    </div>
+  </div>
+
+  <!-- Nombre -->
+  <div class="control" [class.invalid]="classInvalid('firstName')" [class.valid]="classValid('firstName')">
+    <label for="firstName">&#11088; Nombre</label>
+    <input
+      id="firstName"
+      type="text"
+      formControlName="firstName"
+      [placeholder]="placeholder.firstName"
+      title="Ingresá tu nombre real o visible"
+    />
+    <div class="error-message" *ngIf="isInvalid('firstName') && isDirty('firstName')">
+      <span>El nombre es requerido</span>
+    </div>
+  </div>
+
+  <!-- Apellido -->
+  <div class="control" [class.valid]="classValid('lastName')">
+    <label for="lastName">👥 Apellido (opcional)</label>
+    <input
+      id="lastName"
+      type="text"
+      formControlName="lastName"
+      [placeholder]="placeholder.lastName"
+      title="No es obligatorio completar este campo"
+    />
+  </div>
+
+  <!-- Email -->
+  <div class="control" [class.invalid]="classInvalid('email')" [class.valid]="classValid('email')">
+    <label for="email">📧 Email</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      [placeholder]="placeholder.email"
+      title="Ej: nombre@gmail.com"
+    />
+    <div class="error-message" *ngIf="isInvalid('email') && isDirty('email')">
+      <p *ngIf="signUpForm.get('email')?.hasError('required')">El email es requerido</p>
+      <p *ngIf="signUpForm.get('email')?.hasError('email')">El formato no es válido</p>
+    </div>
+  </div>
+
+  <!-- Contraseña -->
+  <div class="control" [class.invalid]="classInvalid('password')" [class.valid]="classValid('password')">
+    <label for="password">🔐 Contraseña</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      [placeholder]="placeholder.password"
+      title="Debe tener al menos {{ MINpasswordLength }} caracteres"
+    />
+    <div class="error-message" *ngIf="isInvalid('password') && isDirty('password')">
+      <p *ngIf="signUpForm.get('password')?.hasError('required')">La contraseña es requerida</p>
+      <p *ngIf="signUpForm.get('password')?.hasError('minlength')">
+        La contraseña debe tener mínimo {{ MINpasswordLength }} caracteres
+      </p>
+    </div>
+  </div>
+
+  <!-- Confirmar Contraseña -->
+  <div class="control" [class.invalid]="signUpForm.hasError('passwordMismatch')" [class.valid]="classValid('password') && !signUpForm.hasError('passwordMismatch')">
+    <label for="confirmPassword">🔁 Confirmar Contraseña</label>
+    <input
+      id="confirmPassword"
+      type="password"
+      formControlName="confirmPassword"
+      [placeholder]="placeholder.confirmPassword"
+      data-bs-toggle="tooltip" 
+      data-bs-placement="right"
+      title="Debe coincidir con la anterior"
+    />
+    <div class="error-message" *ngIf="signUpForm.hasError('passwordMismatch')">
+      <p>Las contraseñas no coinciden</p>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="form-buttons">
+    <button type="button" class="btn btn-secondary" (click)="setDefaultValues()">🧪 Cargar Datos de Prueba</button>
+    <button type="submit" class="btn btn-primary" [disabled]="signUpForm.invalid">✅ Registrarse</button>
+  </div>
+
+  <!-- Mensajes -->
+  <div *ngIf="succes" class="mensaje alert alert-success"> Su usuario ah creado! 🥳</div>
+  <div *ngIf="error" class="mensaje alert alert-danger"> Error, el e-mail "{{signUpForm.get('email')?.value}}" se encuentra registrado.</div>
+
+</form>
+

@@ -1,0 +1,35 @@
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+    
+    <!-- Usuario -->
+    <div class="control" [class.invalid]="classInvalid('username')" [class.valid]="classValid('username')">
+        <label for="username">👤 Usuario</label>
+        <input
+            id="username"
+            type="text"
+            formControlName="username"
+            [placeholder]="placeholder.username"
+            title="Ingresá tu apodo o alias"
+        />
+        <div class="error-message" *ngIf="isInvalid('username') && isDirty('username')">
+            <p>El nombre de usuario es requerido</p>
+        </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="control" [class.invalid]="classInvalid('password')" [class.valid]="classValid('password')">
+        <label for="password">🔐 Contraseña</label>
+        <input
+            id="password"
+            type="password"
+            formControlName="password"
+            [placeholder]="placeholder.password"
+            title="Ingresá tu contraseña"
+        />         
+    </div>
+
+    <!-- Boton + Mensaje -->
+    <div class="control">
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesion</button>
+        <div *ngIf="error" class="alert alert-danger mensaje">el usuario o contraseña ingresado es invalido</div> 
+    </div>
+</form>
