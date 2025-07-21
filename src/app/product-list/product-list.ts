@@ -3,6 +3,7 @@ import { Product } from './Product';
 import { ProductCartService } from '../product-cart.service';
 import { ProductDataService } from '../product-data.service';
 import { Observable } from 'rxjs';
+import { AuthService, User } from '../authentication-service';
 
 @Component({
   selector: 'app-product-list',
@@ -13,13 +14,18 @@ import { Observable } from 'rxjs';
 export class ProductList {
 
   title="Lista de Productos"
+  
   dataList$!: Observable<Product[]>;
- 
+
+  currentUser$!: Observable<User | null>;
+
   constructor(
     private cartService: ProductCartService,
-    private productDataService: ProductDataService
+    private productDataService: ProductDataService,
+    public auth: AuthService,
   ){      
     this.dataList$ = productDataService.dataList.asObservable();
+    this.currentUser$= auth.currentUser$
   }
  
    addToCart(product:Product):void{
@@ -35,7 +41,7 @@ export class ProductList {
             // Esto se debe a que product es la referencia del producto que contiene _dataList del servicio, si modificamos el objeto, se
             // modifica la lista (de productDataService) y propaga la modificacion a la vista (de ProductList)
       const p:Product = {...product};
-      this.productDataService.updateProductStock({...product})
+      this.productDataService.reduceProductStock({...product})
       this.cartService.addToCart(p) // al pasar una copia por parametro, no importa el orden en que invoque los servicios, si no lo hiciera deberia invocarlos al revez.
       // si le paso this.cartService.addToCart({...product}) no realiza la copia y en este orden vuelve a descontar dos veces el buyQuantity devuelta
       product.buyQuantity = 0;

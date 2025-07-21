@@ -1,11 +1,61 @@
-<h1 class="text-center">Carrito de Compras</h1>
-<ul>
+<h2 class="text-center my-4 fw-bold">
+  🛒 Carrito de Compras
+</h2>
+<table class="table table-hover text-center">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col" aria-label="imagen del producto"></th>
+      <th scope="col">nombre</th>
+      <th scope="col">precio</th>
+      <th scope="col">unidades</th>
+      <th scope="col" aria-label="quitar producto del carrito"></th>
+    </tr>   
+  </thead>
+  <tbody class="table-group-divider">
     @for (product of (cartList$ | async); track product.name){
-        <li>{{product.name}}-{{product.buyQuantity}}</li>
+        <!-- <li>{{product.name}}-{{product.buyQuantity}}</li> -->
+      <tr scope="row">
+        <td><img [src]="product.image" [alt]="product.name" class="img-product"></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency }} c/u</td>
+        <td>{{ product.buyQuantity}}</td>
+        <!-- &#10060; -->
+        <td>
+            <button 
+                type="button"
+                class="btn btn-dark"
+                (click)="removeFromCart(product)">
+                &#10060;
+            </button>
+        </td>
+      </tr> 
+      
+    } @empty {
+        <tr scope="row">
+    
+          <td colspan="12">
+            @if((currentUser$|async) && auth.isLoggedIn()){
+              aun no hay productos en el carrito
+            }@else { para comenzar a comprar inicia sesion } 
+          </td>
+
+        </tr>
     }
-    <button type="button" class="btn btn-dark btn-sm"
-        (click)="makePurchase()" 
-        [disabled]="(cartList$ | async)?.length === 0">
-    Confirmar Compra 🛒
-    </button>
-</ul>
+    @if((cartList$|async)  && (total$|async)! > 0){
+      <tr scope="row"><td colspan="12"><span>Total {{ (total$|async) | currency }}</span></td></tr>
+    }
+  
+  </tbody>
+</table>
+
+@if((currentUser$|async) && auth.isLoggedIn()){
+  
+  <div class="d-grid gap-2">
+      <button type="button" class="btn btn-dark btn-sm"
+          (click)="makePurchase()" 
+          [disabled]="(cartList$ | async)?.length === 0">
+      Confirmar Compra 💳
+      </button>
+  </div>
+}
+ 

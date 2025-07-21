@@ -1,59 +1,50 @@
-# Brewery
+# 🛍️ Friki Store - Proyecto Final Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+![Portada](./src/assets/portada.png)
 
-## Development server
+Este proyecto consiste en una aplicación web llamada **Friki Store**, que permite visualizar una lista de productos de comics y anime, agregarlos a un carrito de compras y simular una compra.  
+Incluye funcionalidades como:
+- Visualización de productos
+- Carrito de compras con validación de stock
+- Gestión de productos solo para administradores (falta implementar el CRUD para el rol:admin)
+- Registro e inicio de sesión
+- Panel de administración básico
 
-To start a local development server, run:
+## 🚀 Tecnologías usadas
 
-```bash
-ng serve
-```
+- Angular
+- Bootstrap
+- RxJS
+- API Mock (MockAPI)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## 🎯 Objetivo
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+El objetivo principal fue construir una SPA (Single Page Application) usando Angular, aplicando conceptos como:
+- Componentes y servicios
+- Formularios reactivos y validaciones
+- Comunicación con APIs
+- Manejo del estado y uso de observables
+- Ruteo
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 👨‍🎓 Datos del Estudiante
 
-```bash
-ng generate --help
-```
+- **Nombre y Apellido**: Mariano Jesús Hiese  
+- **DNI**: 38512766  
+- **Email**: marianohiese@gmail.com  
+- **Sede**: Tandil
 
-## Building
+---
 
-To build the project run:
+## 🔗 Enlaces del proyecto
 
-```bash
-ng build
-```
+- **GitHub**: [https://github.com/MarianoHR07/Friki-Store](https://github.com/MarianoHR07/Friki-Store)
+- **StackBlitz (editable)**: [https://stackblitz.com/~/github.com/MarianoHR07/Friki-Store](https://stackblitz.com/~/github.com/MarianoHR07/Friki-Store)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 📝 Notas
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este proyecto fue desarrollado como trabajo final para la materia **Introducción a Angular**, como parte de la carrera de TUDAI.

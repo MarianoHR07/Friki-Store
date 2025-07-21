@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService, User } from './authentication-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,25 @@ import { Component } from '@angular/core';
 })
 export class App {
   protected title = 'friki-store';  
-  // el componente app esta definiendo una propiedad/ attributo 
-  // y toda propiedad de caracter publico que esta en el componente la podemos usar e incluir en el Html
+  // showLoginForm=
+
+  currentUser$!: Observable<User | null>;
+
+
+  constructor (private auth:AuthService){
+    this.currentUser$ = auth.currentUser$
+  }
+
+  userLoggedIn():boolean{
+    return this.auth.isLoggedIn();
+  }
+
+  userLogOut():void{
+    this.auth.logout();
+  }
+ 
+  userName():string{
+    return this.auth.getCurrent_UserName() ?? '';
+  }
+
 }

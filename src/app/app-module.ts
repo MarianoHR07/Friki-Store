@@ -5,13 +5,15 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { ProductList } from './product-list/product-list';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreAbout } from './store-about/store-about';
 import { ShoppingCart } from './shopping-cart/shopping-cart';
 import { FrikiStoreMerchandise } from './friki-store-merchandise/friki-store-merchandise';
 import { InputCounter } from './input-counter/input-counter';
 
 import { HttpClientModule} from '@angular/common/http';
+import { SignUp } from './sign-up/sign-up';
+import { LogIn } from './log-in/log-in';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,16 @@ import { HttpClientModule} from '@angular/common/http';
     StoreAbout,
     ShoppingCart,
     FrikiStoreMerchandise,
-    InputCounter
+    InputCounter,
+    SignUp,
+    LogIn
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule 
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

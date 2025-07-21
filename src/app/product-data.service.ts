@@ -45,13 +45,21 @@ export class ProductDataService {
     );
   }
 
-  updateProductStock(product: Product) {
+  reduceProductStock(product: Product) {
     let item:Product= this._dataList.find((i)=> (i.id == product.id))!;
     
     if(item && (item.stock >= product.buyQuantity)){  // "(item.stock >= product.buyQuantity)"<---chequear si es necesario, siendo q esta logica la controla el input-counter (creo q no es necesario)
       item.stock -= product.buyQuantity;
     }
     this.dataList.next(this._dataList);   // esto si esta comentado no me cambia nada por que ????
+  }
+
+  restoreProductStock(productID:number, quantity:number):void{
+    let item:Product= this._dataList.find((i)=> (i.id == productID))!;
+    if(item){
+      item.stock += quantity;
+      this.dataList.next(this._dataList);
+    }
   }
   
 } 

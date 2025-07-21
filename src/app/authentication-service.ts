@@ -52,6 +52,10 @@ export class AuthService {
     this._currentUser.next(null)
   }
 
+  isLoggedIn():boolean{
+    return (this._currentUser.value !== null)
+  }
+  
   isAdmin():boolean{
     return this._currentUser.value?.role === 'admin';
   }
